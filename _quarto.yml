@@ -1,16 +1,16 @@
 project:
-  # type: website
   type: book
   output-dir: docs
+  
 
 
 book:
-  title: "Computational Mathematics II (MATH2731)"
-  author: "Dr Andrew Krause & Dr Denis Patterson, Durham University"
+  title: "Advanced Mathematical Biology IV (MATH4411)"
+  author: "Dr Denis Patterson, Durham University"
   date: "June 2025"
   chapters:
     - index.qmd
-    # - chap-functions.qmd
+    - chap-one.qmd
     
 
 format:
