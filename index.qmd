@@ -56,8 +56,6 @@ Problem classes will not contain any new material, but will focus on the present
 | Week 9  | 2 lectures, HW4 due                          | Chapter 4    |
 | Week 10 | 1 lecture, 1 rev. class + extra prob. sheet  | Chapter 4    |
 
----
-
 ## Additional Reading
 
 The lecture notes are designed to be sufficient for the course and hence students do not need to purchase a textbook to successfully complete the course. References for additional reading will also be given at the end of each chapter. The main reference for the course content in Michaelmas term is:
@@ -68,8 +66,6 @@ Supplementary material can also be found in:
 
 - **Murray, J.D.** *Mathematical Biology: II: Spatial Models and Biomedical Applications*, Vol. 3, Springer, 2003.
 - **Keener, J.P.** *Biology in Time and Space: A Partial Differential Equation Modeling Approach*, Vol. 50, American Mathematical Society, 2021.
-
----
 
 ## Contact Information
 

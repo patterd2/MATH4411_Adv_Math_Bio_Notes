@@ -1,6 +1,6 @@
-# Computational Mathematics II
+# Advanced Mathematical Biology IV (MATH 4411)
 
-This repository is for codes, lecture notes and slides for the module Computational Mathematics II (Math 2731)
+This repository is for lecture notes from the course Advanced Mathematical Biology IV (MATH 4411) at Durham University.
 
-Andrew Krause and Denis Patterson, Mathematical Sciences, Durham University
-May 2025
+Denis Patterson, Mathematical Sciences, Durham University
+June 2025.

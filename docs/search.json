@@ -1,5 +1,55 @@
 [
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Advanced Mathematical Biology IV (MATH4411)",
+    "section": "",
+    "text": "Michaelmas Term Overview\n$$ \\def\\eb{\\boldsymbol{e}} \\def\\fb{\\boldsymbol{f}} \\def\\hb{\\boldsymbol{h}} \\def\\xb{\\boldsymbol{x}} \\def\\Rb{\\boldsymbol{R}} \\def\\Real{\\mathbb{R}} \\def\\bfzero{\\boldsymbol{0}} \\newcommand{\\ddy}[2]{\\frac{\\partial{#1}}{\\partial{#2}}} $$\nIn Michaelmas term of this course, we will study a range of stochastic models that allow us to analyse populations of biological agents moving and interacting in both space and time. We will consider general individual-based models in the form of stochastic simulation algorithms accounting for reactions among chemical species, or interactions between individuals in a population. We show how these models can, in various limits, give rise to the same continuum-level descriptions obtained via conservation laws at the macroscale. However, we will also demonstrate novel features of stochastic individual-based models, such as stochastic resonance and noise-induced attractor switching, that are not present in the deterministic macroscale models.\nA key focus will be on designing and understanding stochastic simulation algorithms to simulate various stochastic processes on a computer. Simultaneously, we will develop a toolkit of analytic approaches to studying these processes that will validate and complement direct numerical simulations. We begin by studying how to simulate spatially homogeneous reaction systems, before moving on to more complex spatially extended systems later in the course. Applications will include models from ecology, neuroscience, chemistry, genetics and cell biology.",
+    "crumbs": [
+      "Michaelmas Term Overview"
+    ]
+  },
+  {
+    "objectID": "index.html#content",
+    "href": "index.html#content",
+    "title": "Advanced Mathematical Biology IV (MATH4411)",
+    "section": "Content",
+    "text": "Content\nThe content of Term 1 is divided into 4 Chapters, some of which will be longer than others as we devote more time earlier in the course to foundational concepts that will be needed throughout.\n\nChapter 1: Stochastic Simulation of Chemical Reactions\n\nStochastic models of 1st, 2nd, and higher order chemical reaction systems\n“Naive” versus Gillespie stochastic simulation algorithms\nThe chemical master equation\nStationary distributions and probability generating functions\n\nChapter 2: Deterministic vs Stochastic Models\n\nDisagreement between ODEs and stochastic systems\nStochastic resonance\nFinite-size effects and stochastic forcing\n\nChapter 3: Stochastic Differential Equations (SDEs)\n\nComputational definition of SDEs\nExamples with drift, diffusion and bistability\nIntroduction to the Fokker-Planck equation (and Chemical F-P equation)\nMean switching times and bistability\n\nChapter 4: Stochastic Reaction-diffusion Models\n\nModeling diffusion with SDEs\nDiscrete approach to diffusion\nSpatially discrete approach to reaction-diffusion\nSDE approach to reaction-diffusion\nPattern formation in stochastic models",
+    "crumbs": [
+      "Michaelmas Term Overview"
+    ]
+  },
+  {
+    "objectID": "index.html#lectures-problem-classes-homeworks",
+    "href": "index.html#lectures-problem-classes-homeworks",
+    "title": "Advanced Mathematical Biology IV (MATH4411)",
+    "section": "Lectures, Problem Classes & Homeworks",
+    "text": "Lectures, Problem Classes & Homeworks\nLectures will primarily be used to present new material, but will also feature computer demonstrations of the algorithms and models presented. As such, students are encouraged to bring along their own laptops to both lectures and problem classes so that they can also run the examples themselves. The MATLAB code for all of the examples will be available on the course Github page:\n\nhttps://github.com/patterd2/MATH4411_Adv_Math_Bio\n\nYou don’t need any prior coding experience in MATLAB to run this code; mostly you will just want to tweak parameter values, analyse the output of the code, and compare the algorithms to the pseudocode in the lecture notes.\nProblem classes will not contain any new material, but will focus on the presentation of additional examples, discussion of lecture material, and solving problems from the problem sheets. There will be 4 short homework assignments that will be graded for the purposes of formative assessment (i.e. letter grade of A-D with additional comments and feedback). Homeworks will be due every two weeks with the first homework due in week 4 (precise submission instructions are available on Ultra and on the homework question sheets themselves).\n\n\n\n\n\n\n\n\n\nActivities\nContent\n\n\n\n\nWeek 1\nIntroductory lecture, 1 lecture\nChapter 1\n\n\nWeek 2\n2 lectures, 1 problem class\nChapter 1\n\n\nWeek 3\n2 lectures, HW1 due\nChapter 1\n\n\nWeek 4\n2 lectures, 1 problem class\nChapter 2\n\n\nWeek 5\n2 lectures, HW2 due\nChapter 2\n\n\nWeek 6\n2 lectures, 1 problem class\nChapter 3\n\n\nWeek 7\n2 lectures, HW3 due\nChapter 3\n\n\nWeek 8\n2 lectures, 1 problem class\nCh. 3/Ch. 4\n\n\nWeek 9\n2 lectures, HW4 due\nChapter 4\n\n\nWeek 10\n1 lecture, 1 rev. class + extra prob. sheet\nChapter 4",
+    "crumbs": [
+      "Michaelmas Term Overview"
+    ]
+  },
+  {
+    "objectID": "index.html#additional-reading",
+    "href": "index.html#additional-reading",
+    "title": "Advanced Mathematical Biology IV (MATH4411)",
+    "section": "Additional Reading",
+    "text": "Additional Reading\nThe lecture notes are designed to be sufficient for the course and hence students do not need to purchase a textbook to successfully complete the course. References for additional reading will also be given at the end of each chapter. The main reference for the course content in Michaelmas term is:\n\nErban, R. & Chapman, S.J. Stochastic Modelling of Reaction-Diffusion Processes, Vol. 60, Cambridge University Press, 2020.\n\nSupplementary material can also be found in:\n\nMurray, J.D. Mathematical Biology: II: Spatial Models and Biomedical Applications, Vol. 3, Springer, 2003.\nKeener, J.P. Biology in Time and Space: A Partial Differential Equation Modeling Approach, Vol. 50, American Mathematical Society, 2021.",
+    "crumbs": [
+      "Michaelmas Term Overview"
+    ]
+  },
+  {
+    "objectID": "index.html#contact-information",
+    "href": "index.html#contact-information",
+    "title": "Advanced Mathematical Biology IV (MATH4411)",
+    "section": "Contact Information",
+    "text": "Contact Information\nFor questions or clarifications on any of the above, please come speak to me in lectures, office hours or drop me an email at denis.d.patterson@durham.ac.uk.",
+    "crumbs": [
+      "Michaelmas Term Overview"
+    ]
+  },
+  {
     "objectID": "chap-one.html",
     "href": "chap-one.html",
     "title": "1  Stochastic Simulation of Chemical Reactions",
@@ -77,56 +127,6 @@
     "text": "References\n\n\nCao, Yang, Daniel T Gillespie, and Linda R Petzold. 2006.\n“Efficient Step Size Selection for the Tau-Leaping Simulation\nMethod.” The Journal of Chemical Physics 124 (4).\n\n\nGillespie, Daniel T. 1977. “Exact Stochastic Simulation of Coupled\nChemical Reactions.” The Journal of Physical Chemistry\n81 (25): 2340–61.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Stochastic Simulation of Chemical Reactions</span>"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Advanced Mathematical Biology IV (MATH4411)",
-    "section": "",
-    "text": "Michaelmas Term Overview\n$$ \\def\\eb{\\boldsymbol{e}} \\def\\fb{\\boldsymbol{f}} \\def\\hb{\\boldsymbol{h}} \\def\\xb{\\boldsymbol{x}} \\def\\Rb{\\boldsymbol{R}} \\def\\Real{\\mathbb{R}} \\def\\bfzero{\\boldsymbol{0}} \\newcommand{\\ddy}[2]{\\frac{\\partial{#1}}{\\partial{#2}}} $$\nIn Michaelmas term of this course, we will study a range of stochastic models that allow us to analyse populations of biological agents moving and interacting in both space and time. We will consider general individual-based models in the form of stochastic simulation algorithms accounting for reactions among chemical species, or interactions between individuals in a population. We show how these models can, in various limits, give rise to the same continuum-level descriptions obtained via conservation laws at the macroscale. However, we will also demonstrate novel features of stochastic individual-based models, such as stochastic resonance and noise-induced attractor switching, that are not present in the deterministic macroscale models.\nA key focus will be on designing and understanding stochastic simulation algorithms to simulate various stochastic processes on a computer. Simultaneously, we will develop a toolkit of analytic approaches to studying these processes that will validate and complement direct numerical simulations. We begin by studying how to simulate spatially homogeneous reaction systems, before moving on to more complex spatially extended systems later in the course. Applications will include models from ecology, neuroscience, chemistry, genetics and cell biology.",
-    "crumbs": [
-      "Michaelmas Term Overview"
-    ]
-  },
-  {
-    "objectID": "index.html#content",
-    "href": "index.html#content",
-    "title": "Advanced Mathematical Biology IV (MATH4411)",
-    "section": "Content",
-    "text": "Content\nThe content of Term 1 is divided into 4 Chapters, some of which will be longer than others as we devote more time earlier in the course to foundational concepts that will be needed throughout.\n\nChapter 1: Stochastic Simulation of Chemical Reactions\n\nStochastic models of 1st, 2nd, and higher order chemical reaction systems\n“Naive” versus Gillespie stochastic simulation algorithms\nThe chemical master equation\nStationary distributions and probability generating functions\n\nChapter 2: Deterministic vs Stochastic Models\n\nDisagreement between ODEs and stochastic systems\nStochastic resonance\nFinite-size effects and stochastic forcing\n\nChapter 3: Stochastic Differential Equations (SDEs)\n\nComputational definition of SDEs\nExamples with drift, diffusion and bistability\nIntroduction to the Fokker-Planck equation (and Chemical F-P equation)\nMean switching times and bistability\n\nChapter 4: Stochastic Reaction-diffusion Models\n\nModeling diffusion with SDEs\nDiscrete approach to diffusion\nSpatially discrete approach to reaction-diffusion\nSDE approach to reaction-diffusion\nPattern formation in stochastic models",
-    "crumbs": [
-      "Michaelmas Term Overview"
-    ]
-  },
-  {
-    "objectID": "index.html#lectures-problem-classes-homeworks",
-    "href": "index.html#lectures-problem-classes-homeworks",
-    "title": "Advanced Mathematical Biology IV (MATH4411)",
-    "section": "Lectures, Problem Classes & Homeworks",
-    "text": "Lectures, Problem Classes & Homeworks\nLectures will primarily be used to present new material, but will also feature computer demonstrations of the algorithms and models presented. As such, students are encouraged to bring along their own laptops to both lectures and problem classes so that they can also run the examples themselves. The MATLAB code for all of the examples will be available on the course Github page:\n\nhttps://github.com/patterd2/MATH4411_Adv_Math_Bio\n\nYou don’t need any prior coding experience in MATLAB to run this code; mostly you will just want to tweak parameter values, analyse the output of the code, and compare the algorithms to the pseudocode in the lecture notes.\nProblem classes will not contain any new material, but will focus on the presentation of additional examples, discussion of lecture material, and solving problems from the problem sheets. There will be 4 short homework assignments that will be graded for the purposes of formative assessment (i.e. letter grade of A-D with additional comments and feedback). Homeworks will be due every two weeks with the first homework due in week 4 (precise submission instructions are available on Ultra and on the homework question sheets themselves).\n\n\n\n\n\n\n\n\n\nActivities\nContent\n\n\n\n\nWeek 1\nIntroductory lecture, 1 lecture\nChapter 1\n\n\nWeek 2\n2 lectures, 1 problem class\nChapter 1\n\n\nWeek 3\n2 lectures, HW1 due\nChapter 1\n\n\nWeek 4\n2 lectures, 1 problem class\nChapter 2\n\n\nWeek 5\n2 lectures, HW2 due\nChapter 2\n\n\nWeek 6\n2 lectures, 1 problem class\nChapter 3\n\n\nWeek 7\n2 lectures, HW3 due\nChapter 3\n\n\nWeek 8\n2 lectures, 1 problem class\nCh. 3/Ch. 4\n\n\nWeek 9\n2 lectures, HW4 due\nChapter 4\n\n\nWeek 10\n1 lecture, 1 rev. class + extra prob. sheet\nChapter 4",
-    "crumbs": [
-      "Michaelmas Term Overview"
-    ]
-  },
-  {
-    "objectID": "index.html#additional-reading",
-    "href": "index.html#additional-reading",
-    "title": "Advanced Mathematical Biology IV (MATH4411)",
-    "section": "Additional Reading",
-    "text": "Additional Reading\nThe lecture notes are designed to be sufficient for the course and hence students do not need to purchase a textbook to successfully complete the course. References for additional reading will also be given at the end of each chapter. The main reference for the course content in Michaelmas term is:\n\nErban, R. & Chapman, S.J. Stochastic Modelling of Reaction-Diffusion Processes, Vol. 60, Cambridge University Press, 2020.\n\nSupplementary material can also be found in:\n\nMurray, J.D. Mathematical Biology: II: Spatial Models and Biomedical Applications, Vol. 3, Springer, 2003.\nKeener, J.P. Biology in Time and Space: A Partial Differential Equation Modeling Approach, Vol. 50, American Mathematical Society, 2021.",
-    "crumbs": [
-      "Michaelmas Term Overview"
-    ]
-  },
-  {
-    "objectID": "index.html#contact-information",
-    "href": "index.html#contact-information",
-    "title": "Advanced Mathematical Biology IV (MATH4411)",
-    "section": "Contact Information",
-    "text": "Contact Information\nFor questions or clarifications on any of the above, please come speak to me in lectures, office hours or drop me an email at denis.d.patterson@durham.ac.uk.",
-    "crumbs": [
-      "Michaelmas Term Overview"
     ]
   }
 ]
