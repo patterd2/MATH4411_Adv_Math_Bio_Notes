@@ -629,10 +629,10 @@ $$
 
 | Reaction | order | $\alpha(t)$ | units of $k$ |
 |----------|-------|-------------|--------------|
-| $\emptyset \xrightarrow[]{k} A $ | zero | $k\nu$ | m$^{-3}$ sec$^{-1}$ |
-| $A \xrightarrow[]{k} \emptyset$ | first | $kA(t)$ | sec$^{-1}$ |
-| $A + B \xrightarrow[]{k} \emptyset$ | second | $k A(t)B(t)/\nu$ | m$^{-3}$ sec$^{-1}$ |
-| $A+B+C \xrightarrow[]{k} \emptyset$ | third | $kA(t)B(t)C(t)/ \nu^2$ | m$^{-6}$ sec$^{-1}$ |
+| $\emptyset \xrightarrow[]{k} A$ | zero | $k\nu$ | $m^{-3}\ \mathrm{sec}^{-1}$ |
+| $A \xrightarrow[]{k} \emptyset$ | first | $kA(t)$ | $\mathrm{sec}^{-1}$ |
+| $A + B \xrightarrow[]{k} \emptyset$ | second | $k A(t)B(t)/\nu$ | $m^{-3}\ \mathrm{sec}^{-1}$ |
+| $A+B+C \xrightarrow[]{k} \emptyset$ | third | $kA(t)B(t)C(t)/ \nu^2$ | $m^{-6}\ \mathrm{sec}^{-1}$ |
 : {#tbl-prop_higher}
 
 Implicit in all of these processes is the assumption that the molecules are **well-mixed** spatially, meaning that a molecule of any species is equally likely to encounter a molecule of any other species. Later in the course we will consider biological processes where this well-mixedness assumption is very strongly violated, such as in chemotaxis in cell biology (in which cells are attracted to/repulsed by other cells) or prey that move to avoid predators in ecological models.
