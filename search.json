@@ -108,5 +108,25 @@
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Stochastic Simulation of Chemical Reactions</span>"
     ]
+  },
+  {
+    "objectID": "chap-one.html#knowledge-checklist",
+    "href": "chap-one.html#knowledge-checklist",
+    "title": "1  Stochastic Simulation of Chemical Reactions",
+    "section": "Knowledge checklist",
+    "text": "Knowledge checklist\nKey topics:\n\nChemical reaction processes (continuous time jump processes)\nThe law of mass action (approximation)\n“Naive” & Gillespie SSAs; the inverse transform method\nChemical master equations (CMEs)\nProbability generating functions\nStationary distributions\n\nKey skills:\n\nDefine and interpret chemical reaction processes using either:\n\nThe reaction notation (e.g. \\(A + B \\to C\\)), or\nthe leading order probabilistic formulations\n(e.g. \\(\\mathbb{P}[ A(t+ dt) = n ] \\approx f(A(t))dt + O(dt^2)\\)).\n\nWrite and analyse mass action approximations of chemical reaction processes\nWrite and analyse pseudocode for SSAs (Gillespie and the “naive” SSA)\n\nGiven a chemical reaction process, write the propensity functions for each reaction (especially for higher order reactions)\nComment on the efficiency and justify the correctness of SSAs\n\nWrite and analyse chemical master equations, i.e.\n\ncomputing stationary distributions from CMEs\ncalculating and solving moment equations\ncompute/analyse probability generating functions\n\nDescribe the differences between and advantages/disadvantages of different approaches to studying a given chemical reaction process (i.e. mass action versus SSAs versus analytic approaches).",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Stochastic Simulation of Chemical Reactions</span>"
+    ]
+  },
+  {
+    "objectID": "chap-one.html#references",
+    "href": "chap-one.html#references",
+    "title": "1  Stochastic Simulation of Chemical Reactions",
+    "section": "References",
+    "text": "References\n\n\n\n\nCao, Yang, Daniel T Gillespie, and Linda R Petzold. 2006. “Efficient Step Size Selection for the Tau-Leaping Simulation Method.” The Journal of Chemical Physics 124 (4).\n\n\nGillespie, Daniel T. 1977. “Exact Stochastic Simulation of Coupled Chemical Reactions.” The Journal of Physical Chemistry 81 (25): 2340–61.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Stochastic Simulation of Chemical Reactions</span>"
+    ]
   }
 ]
