@@ -58,18 +58,23 @@ format:
        \DeclareOldFontCommand{\rm}{\normalfont\rmseries}{\mathrm}
 
 
-# filters:
-#   - custom-numbered-blocks
+filters:
+  - custom-numbered-blocks
 
-# custom-numbered-blocks:
-#   classes:
-#     eg:
-#       collapse: True
-#       boxstyle: foldbox.simple
-#       colors: [e7efea, 53b57b]
-#       label: Example
-#     prp:
-#       collapse: False
-#       boxstyle: foldbox.simple
-#       colors: [fcebee, ea3342]
-#       label: Proposition
+custom-numbered-blocks:
+  classes:
+    eg:
+      collapse: True
+      boxstyle: foldbox.simple
+      colors: [e7efea, 53b57b]
+      label: Example
+    doit:
+      collapse: False
+      boxstyle: foldbox.simple
+      colors: [e7efea, 53b57b]
+      label: Exercise
+    prp:
+      collapse: False
+      boxstyle: foldbox.simple
+      colors: [fcebee, ea3342]
+      label: Proposition

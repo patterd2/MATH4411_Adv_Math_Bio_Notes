@@ -29,12 +29,13 @@ Let $A(t)$ denote the number of molecules of species $A$ in the experiment at ti
 
 If $dt$ is sufficiently small, we can neglect the $\mathcal{O}(dt^2)$ terms and thus ignore the possibility of multiple reactions occurring "simultaneously".
 
-> **Info**  
-> From its definition, the degradation process has the **Markov property**, i.e.
-> $$
-> \mathbb{P}[A(t+dt) = n \mid A(s), s \leq t ] = \mathbb{P}[A(t+dt) = n \mid A(t) ].
-> $$
-> Can you give an intuitive explanation of why this is the case? Since it is posed in continuous time, $A$ is formally called a **Markov jump process**.
+:::{.callout-note}
+From its definition, the degradation process has the **Markov property**, i.e.
+$$
+\mathbb{P}[A(t+dt) = n \mid A(s), s \leq t ] = \mathbb{P}[A(t+dt) = n \mid A(t) ].
+$$
+Can you give an intuitive explanation of why this is the case? Since it is posed in continuous time, $A$ is formally called a **Markov jump process**.
+:::
 
 Deferring the mathematical analysis of this process for now, how could we simulate a sample path of the process to find the number of molecules of $A$ remaining at time $t$ given $A(0) = n_0$? We could try to find a chemical with reaction rate $k$ and conduct the actual experiment, or we can simulate the process on a computer! To this end, we may introduce the following "naive" stochastic simulation algorithm (SSA) for the process:
 
@@ -63,11 +64,11 @@ x, & x \in [0,1], \\
 $$
 Hence the probability of one reaction occurring in the interval $[t, t+\Delta t)$ is $\mathbb{P}[r < A(t)k \Delta t] = A(t)k \Delta t$, assuming that $A(t)k \Delta t < 1$. This emphasises the need to choose $\Delta t$ sufficiently small for the algorithm to have the appropriate reaction probabilities. In fact, we want to choose $\Delta t \ll 1/A(t)k$ because this ensures that the probability of multiple reactions taking place in $[t, t+\Delta t)$ is very small, which is what we want according to the definition of the process above. However, there is a trade-off between accuracy and speed here: a smaller $\Delta t$ means lower probability of multiple reactions and numerical error, but a smaller $\Delta t$ also means more compute time (and more intervals in which no reactions take place).
 
-Virtually all modern programming languages have algorithms for generating (pseudo-) random numbers and we can use such routines to generate the uniformly distributed random numbers called for in step 1 to execute the **naive SSA**. The output of some simulations of the degradation process using this algorithm are shown in Figure 1. The left panel shows two sample paths compared to what we called the **deterministic mean**. The motivation for this comparison is that a principle called **the law of mass action** can be invoked to yield a simple deterministic model of the reaction process.
+Virtually all modern programming languages have algorithms for generating (pseudo-) random numbers and we can use such routines to generate the uniformly distributed random numbers called for in step 1 to execute the **naive SSA**. The output of some simulations of the degradation process using this algorithm are shown in @fig-naive. The left panel shows two sample paths compared to what we called the **deterministic mean**. The motivation for this comparison is that a principle called **the law of mass action** can be invoked to yield a simple deterministic model of the reaction process.
 
-> **Info**  
-> The law of mass action states that:  
-> "the rate of a chemical reaction is directly proportional to the product of the activities or concentrations of the reactants."
+:::{.callout-note}
+The law of mass action states that "the rate of a chemical reaction is directly proportional to the product of the activities or concentrations of the reactants."
+:::
 
 If we assume our chemical is at unit volume (for simplicity), then $A$ reacts at a constant rate and so the deterministic model is given by the linear ODE
 $$
@@ -77,18 +78,19 @@ This equation approximately describes the evolution of the mean of the stochasti
 $$
 A(t) = n_0 e^{-kt}, \quad t \geq 0.
 $$
-The deterministic model of the mean behaviour is strictly decreasing in time and thus does not capture the qualitative behaviour of individual trajectories very well. However, the right panel of Figure 1 shows that it captures the behaviour of the average over a large number of simulations quite well; the stochastic mean at time $t$ is calculated as the average value at that time over $20$ simulations of the process.
+The deterministic model of the mean behaviour is strictly decreasing in time and thus does not capture the qualitative behaviour of individual trajectories very well. However, the right panel of @fig-naive shows that it captures the behaviour of the average over a large number of simulations quite well; the stochastic mean at time $t$ is calculated as the average value at that time over $20$ simulations of the process.
 
-![Left: Some paths of the degradation process compared to the corresponding deterministic model of the same process. Right: Stochastic mean compared to the mean predicted by the deterministic model. Parameters: $n_0 = 20$, $k = 0.1$, $\Delta t = 0.005$.](images/Figure1_degradation_example.png){width=95% fig-align="center"}
+![Left: Some paths of the degradation process compared to the corresponding deterministic model of the same process. Right: Stochastic mean compared to the mean predicted by the deterministic model. Parameters: $n_0 = 20$, $k = 0.1$, $\Delta t = 0.005$.](images/Figure1_degradation_example.png){#fig-naive width=95% fig-align="center"}
 
 It is worth noting that the naive SSA is very inefficient in this example as we chose our parameters to ensure a very small probability of multiple reactions occurring in $[t, t+ \Delta t)$. In fact, we had $\mathbb{P}[\text{one reaction in }[t, t+\Delta t)] \approx 0.01$. But this means that step 1 is mostly wasted as we generate lots of random numbers that we don't use! We can be more efficient than that...
 
-> **Do it yourself**  
-> Open the course [Github page](https://github.com/patterd2/MATH4411_Adv_Math_Bio) and try running the MATLAB script:  
-> `CH1_naive_SSA_degradation.m`
->
-> 1. How does the difference between the deterministic and stochastic means change as you vary the number of realisations?  
-> 2. What happens if you set $\Delta t =1$ and how can we explain this behaviour?
+::: {.doit #eggen1 style="font-size:0.9em; font-family:mainfont;"}
+Open the course [Github page](https://github.com/patterd2/MATH4411_Adv_Math_Bio) and try running the MATLAB script:  
+`CH1_naive_SSA_degradation.m`
+
+1. How does the difference between the deterministic and stochastic means change as you vary the number of realisations?  
+2. What happens if you set $\Delta t =1$ and how can we explain this behaviour?
+:::
 
 From an efficiency standpoint, we can do much better than the naive SSA, but this advancement requires a change of perspective. In developing the naive SSA we focused on matching the transition probabilities of the underlying process on short time intervals, stepping forward a short time step and then repeating the probability matching step. We might instead ask: **When is the next reaction going to take place?** If we know when the next reaction will take place, then we can just skip ahead to that time, let the reaction occur, and repeat this process.
 
@@ -150,8 +152,9 @@ $$
 
 and hence we can conclude that $\tau \sim \text{Exp}[kA(t)]$.
 
-> **Info**  
-> In general, the waiting times (time intervals between reactions/jumps) of a Markov jump process are exponentially distributed.
+:::{.callout-note}
+In general, the waiting times (time intervals between reactions/jumps) of a Markov jump process are exponentially distributed.
+:::
 
 We want to simulate the degradation process and so we now need to simulate exponentially distributed random numbers in order to find the next reaction time at each step. Previously, we assumed that our computer could generate random numbers that are uniformly distributed on $[0,1]$, but fortunately, there is a simple way to generate an exponential random variable from a uniform one.
 
@@ -183,15 +186,16 @@ $$
 
 Thus, if $U \sim U([0,1])$, then $\log(1/(1-U))/\lambda \sim \text{Exp}(\lambda)$. Furthermore, $1 - U \sim U([0,1])$ and so $\log(1/U)/\lambda \sim \text{Exp}(\lambda)$ as well; this is the formula that we will use to generate exponentially distributed random numbers in the algorithms that follow.
 
-> **Do it yourself**  
-> 1. Calculate the inverse CDF for the exponential distribution and verify the formula above!  
-> 2. Apply the inverse transform method to the Pareto distribution, which has PDF given by  
-> $$
-> f(x) = \begin{cases}
-> \frac{\alpha\,\beta^\alpha}{x^{\alpha+1}}, & x \geq \beta > 0,\\
-> 0, & \text{else}.
-> \end{cases}
-> $$
+::: {.doit #eggen1 style="font-size:0.9em; font-family:mainfont;"}
+1. Calculate the inverse CDF for the exponential distribution and verify the formula above!  
+2. Apply the inverse transform method to the Pareto distribution, which has PDF given by  
+$$
+f(x) = \begin{cases}
+\frac{\alpha\,\beta^\alpha}{x^{\alpha+1}}, & x \geq \beta 0,\\
+0, & \text{else}.
+\end{cases}
+$$
+:::
 
 ---
 
@@ -210,11 +214,14 @@ At time $t = 0$, set $A(0) = n_0$, then:
 
 ---
 
+@fig-more_efficient below shows the results of some simulations of the degradation process using the more efficient SSA. There is a notable speed-up compared to the naive SSA when plotting large numbers of realisations. We take advantage of this to illustrate further differences between the deterministic model and stochastic one in the right panel of @fig-more_efficient; this panel shows a comparison between the estimated PMF of the process at $t = 10$ and the deterministic mean at the same time. We used $200$ paths of the process for this plot but more are probably required to fully capture the PMF of even this simple process, further highlighting the need for efficient SSAs! 
+
 ![Left: Some paths of the degradation process simulated using the more efficient SSA. Right: Estimated PMF of the degradation process based on $200$ realisations at time $t = 10$. Parameters: $n_0 = 20$, $k = 0.1$.](images/Figure2_degradation_example.png){#fig-more_efficient width=95%}
 
-> **Do it yourself**  
-> Open the course [Github page](https://github.com/patterd2/MATH4411_Adv_Math_Bio) and try running the MATLAB script:  
-> `CH1_more_efficient_SSA_degradation.m`
+::: {.doit #eggen1 style="font-size:0.9em; font-family:mainfont;"} 
+Open the course [Github page](https://github.com/patterd2/MATH4411_Adv_Math_Bio) and try running the MATLAB script:  
+`CH1_more_efficient_SSA_degradation.m`
+:::
 
 ### The Chemical Master Equation
 
@@ -249,8 +256,9 @@ $$
 \frac{d}{dt} P_n(t) = k(n+1)P_{n+1}(t) - kn P_{n}(t), \quad t \geq 0, \quad n \geq 0.
 $$
 
-> **Info**  
-> In the theory of Markov jump processes, this equation is called the **Kolmogorov Forward Equation** (sometimes just the Kolmogorov equation) for the process. You might see this terminology used in other texts or papers.
+:::{.callout-note}
+In the theory of Markov jump processes, this equation is called the **Kolmogorov Forward Equation** (sometimes just the Kolmogorov equation) for the process. You might see this terminology used in other texts or papers.
+:::
 
 The function $P_n(t)$ contains all of the information we could ever want to know about the stochastic process, but to obtain this information we need to solve the system of equations above! In general, this is far from a trivial task for complex processes with many chemical species and reactions (and that is before we even consider adding spatial extent to the system!). However, we can solve this system directly for the degradation process.
 
@@ -321,9 +329,10 @@ $$
 
 This exactly matches the deterministic model for the mean behaviour that we obtained by solving the ODE obtained via the law of mass action. However, this is not true in general and it is also worth noting that the deterministic ODE can't tell us more detailed information about the paths, like their fluctuations or hitting times. For more complicated examples (coming in later chapters), we will see more dramatic disagreement between the mean behaviour predicted by the law of mass action and the dynamics of the underlying stochastic process.
 
-> **Do it yourself**  
-> 1. Complete the inductive step from $n_0 - k$ to $n_0 - (k+1)$ to obtain the formula above.  
-> 2. Use the more efficient SSA code to show that with enough realisations we obtain an approximate Binomial distribution, in agreement with the formula above.
+::: {.doit #eggen1 style="font-size:0.9em; font-family:mainfont;"}
+1. Complete the inductive step from $n_0 - k$ to $n_0 - (k+1)$ to obtain the formula above.  
+2. Use the more efficient SSA code to show that with enough realisations we obtain an approximate Binomial distribution, in agreement with the formula above.
+:::
 
 ## Stochastic Simulation of Production & Degradation
 
@@ -335,7 +344,7 @@ $$
 A \xrightarrow[]{k_1} \emptyset, \quad \emptyset \xrightarrow[]{k_2} A.
 $$
 
-Once more, the $\emptyset$ simply denotes some chemical species not of interest, rather than denoting that $A$ is being produced out of thin air! Given that the volume of the container is $\nu$, we will assume that production of $A$ is proportional to $k_2 \nu$ so that the input scales appropriately with the system size. It is worth remarking that the units of $k_1$ will be sec$^{-1}$ and those of $k_2$ are sec$^{-1}m^{-3}$ because production was chosen to scale with volume. This all leads to the following characterization of the transition rates in a (small) interval $[t,t+dt)$:
+Once more, the $\emptyset$ simply denotes some chemical species not of interest, rather than denoting that $A$ is being produced out of thin air! Given that the volume of the container is $\nu$, we will assume that production of $A$ is proportional to $k_2 \nu$ so that the input scales appropriately with the system size. It is worth remarking that the units of $k_1$ will be sec$^{-1}$ and those of $k_2$ are sec$^{-1}m^{-3}$ because production was chosen to scale with volume. This all leads to the following characterization of the transition rates in a (small) interval $[t,t+dt):$
 
 - No reactions occur:  
   $\mathbb{P}[A(t+dt) = A(t)] \approx 1 - A(t)k_1dt - k_2 \nu dt + \mathcal{O}(dt^2)$
@@ -407,7 +416,7 @@ $$
 \end{aligned}
 $$
 
-Note that these calculations were facilitated by the fact that, given positive rate constants, volume and a non-zero number of molecules, we have
+These calculations were facilitated by the fact that, given positive rate constants, volume and a non-zero number of molecules, we have
 
 $$
 \frac{k_2 \nu}{k_1 A(t) + k_2 \nu} \in (0,1), \quad \frac{k_1 A(t)}{k_1 A(t) + k_2 \nu} \in (0,1).
@@ -436,15 +445,18 @@ $$
 
 in agreement with the formulae above.
 
-> **Do it yourself**  
-> Directly compute $\mathbb{P}[E_P < E_D]$ to show that the formula above holds.
+::: {.doit #eggen1 style="font-size:0.9em; font-family:mainfont;"}
+Directly compute $\mathbb{P}[E_P < E_D]$ to show that the formula above holds.
+:::
 
-![Sample paths of the production/degradation process generating using the more efficient SSA and compared to the deterministic mean; the deterministic mean was obtained by solving the deterministic model generated by the law of mass action. Parameters: $k_1 = 0.1$, $k_2 = 1$, $\nu = 1$, $A(0) = n_0 = 0$.](images/prod_deg_process.png){width=60% fig-align="center"}
+@fig-prod_deg shows some sample paths of the production/degradation process generated using the more efficient SSA. All sample paths begin with $A(0) = 0$ but, for this parameter choice, production outpaces degradation initially before the process levels off somewhat around $10$ molecules (on average). The deterministic mean in this plot is generated by using the law of mass action to derive a deterministic model for the average behaviour of the system.
 
-> **Do it yourself**  
-> 1. Open the course [Github page](https://github.com/patterd2/MATH4411_Adv_Math_Bio) and try running the MATLAB script:  
->    `CH1_production_degradation.m`
-> 2. Use the law of mass action to derive a deterministic model for the production/degradation process and verify the formula for the deterministic mean in the code above.
+![Sample paths of the production/degradation process generating using the more efficient SSA and compared to the deterministic mean; the deterministic mean was obtained by solving the deterministic model generated by the law of mass action. Parameters: $k_1 = 0.1$, $k_2 = 1$, $\nu = 1$, $A(0) = n_0 = 0$.](images/prod_deg_process.png){#fig-prod_deg width=60% fig-align="center"}
+
+::: {.doit #eggen1 style="font-size:0.9em; font-family:mainfont;"}
+1. Open the course [Github page](https://github.com/patterd2/MATH4411_Adv_Math_Bio) and try running the MATLAB script: `CH1_production_degradation.m`
+2. Use the law of mass action to derive a deterministic model for the production/degradation process and verify the formula for the deterministic mean in the code above.
+:::
 
 ### Deriving the chemical master equation
 
@@ -487,12 +499,13 @@ $$
 
 where the final equality used the fact that $\sum_{n=0}^\infty P_n(t) = 1$.
 
-> **Info**  
-> In the preceding calculation we freely exchanged the limiting operations of differentiation and infinite summation, i.e. we implicitly claimed that
-> $$
-> \frac{d}{dt} \sum_{n=0}^\infty n P_n(t)  =  \sum_{n=0}^\infty n \frac{d}{dt} P_n(t).
-> $$
-> Changing the order of limiting operations can, and often does, change the result of a calculation. For example, consider the function $f(n,m) = n/(n+m)$ and let both $n$ and $m$ tend to infinity, order matters here! However, we can interchange limits without worrying about changing the result when the conditions of **uniform convergence** are satisfied. You can assume we have uniform convergence throughout this course, unless explicitly noted otherwise.
+:::{.callout-note}
+In the preceding calculation we freely exchanged the limiting operations of differentiation and infinite summation, i.e. we implicitly claimed that
+$$
+\frac{d}{dt} \sum_{n=0}^\infty n P_n(t)  =  \sum_{n=0}^\infty n \frac{d}{dt} P_n(t).
+$$
+Changing the order of limiting operations can, and often does, change the result of a calculation. For example, consider the function $f(n,m) = n/(n+m)$ and let both $n$ and $m$ tend to infinity, order matters here! However, we can interchange limits without worrying about changing the result when the conditions of **uniform convergence** are satisfied. You can assume we have uniform convergence throughout this course, unless explicitly noted otherwise.
+:::
 
 It is straightforward to then solve this linear inhomogeneous ODE for $M(t)$ to show that
 
@@ -521,7 +534,7 @@ $$
 \end{aligned}
 $$
 
-So,
+Thus,
 
 $$
 \frac{d}{dt}V(t) + 2M(t)\frac{d}{dt}M(t) = -2k_1 (V(t) + M(t)^2) + k_1 M(t) + 2k_2 \nu M(t) + k_2 \nu,
@@ -577,12 +590,15 @@ $$
 
 and hence, for large times, the production/degradation process is approximately Poisson distributed with parameter $k_2 \nu /k_1$.
 
-![Simulations of the production/degradation process starting with $A(0) = 0$ with the PMF estimated at different times and compared to the stationary distribution. Parameters:  $k_1 = 0.1$, $k_2 = 1$, $\nu = 1$, $A(0) = n_0 = 0$.](images/stationary_CME.png){width=100% fig-align="center"}
+@fig-CME shows a comparison of the stationary distribution with the estimated PMF of the process at different times points. In all simulations, $A(0) = 0$ and we can see how the bias of the initial condition begins to disappear gradually as we  take larger and larger time intervals. By $t = 100$, the estimated PMF is already in very close agreement with the asymptotic behaviour predicted by the stationary distribution.
 
-> **Do it yourself**  
-> Open the course [Github page](https://github.com/patterd2/MATH4411_Adv_Math_Bio) and try playing with the MATLAB script:  
-> `CH1_production_degradation_CME.m`  
-> Try varying the initial conditions and the time interval parameter $T$ to observe how the mean and skewness of the estimated PMF vary.
+![Simulations of the production/degradation process starting with $A(0) = 0$ with the PMF estimated at different times and compared to the stationary distribution. Parameters:  $k_1 = 0.1$, $k_2 = 1$, $\nu = 1$, $A(0) = n_0 = 0$.](images/stationary_CME.png){#fig-CME width=100% fig-align="center"}
+
+::: {.doit #eggen1 style="font-size:0.9em; font-family:mainfont;"}
+Open the course [Github page](https://github.com/patterd2/MATH4411_Adv_Math_Bio) and try playing with the MATLAB script:  
+`CH1_production_degradation_CME.m`  
+Try varying the initial conditions and the time interval parameter $T$ to observe how the mean and skewness of the estimated PMF vary.
+:::
 
 ## Higher Order Chemical Reactions
 
@@ -633,19 +649,20 @@ $$
 | $A \xrightarrow[]{k} \emptyset$ | first | $kA(t)$ | $\mathrm{sec}^{-1}$ |
 | $A + B \xrightarrow[]{k} \emptyset$ | second | $k A(t)B(t)/\nu$ | $m^{-3}\ \mathrm{sec}^{-1}$ |
 | $A+B+C \xrightarrow[]{k} \emptyset$ | third | $kA(t)B(t)C(t)/ \nu^2$ | $m^{-6}\ \mathrm{sec}^{-1}$ |
-: {#tbl-prop_higher}
+: Examples of some simple low order chemical reactions and their corresponding propensity functions. {#tbl-prop_higher}
 
 Implicit in all of these processes is the assumption that the molecules are **well-mixed** spatially, meaning that a molecule of any species is equally likely to encounter a molecule of any other species. Later in the course we will consider biological processes where this well-mixedness assumption is very strongly violated, such as in chemotaxis in cell biology (in which cells are attracted to/repulsed by other cells) or prey that move to avoid predators in ecological models.
 
-> **Do it yourself**  
-> Write down the propensity functions for the following reaction processes:  
-> 1. $2A + B \xrightarrow{k} \emptyset$  
-> 2. $A + 2B + C \xrightarrow{k} \emptyset$  
-> 3. $2A + 3B \xrightarrow{k} \emptyset$
+::: {.doit #eggen1 style="font-size:0.9em; font-family:mainfont;"}
+Write down the propensity functions for the following reaction processes:  
+1. $2A + B \xrightarrow{k} \emptyset$  
+2. $A + 2B + C \xrightarrow{k} \emptyset$  
+3. $2A + 3B \xrightarrow{k} \emptyset$
+:::
 
 ## Stochastic Simulation of Dimerisation
 
-The chemical master equations for complex higher-order reaction processes are typically very hard to solve analytically. In this section we will use an example of a dimerisation process to introduce the probability generating function approach to solving the chemical master equations.
+The chemical master equations for complex higher-order reaction processes are typically very hard to solve analytically. In this section we will use an example of a dimerisation process to introduce the probability generating function approach to solving the chemical master equations. Dimerisation in chemistry is the process where two identical or similar molecules, known as monomers, join together to form a single, larger molecule called a dimer -- we will use it as the simplest example of a second order chemical reaction process. 
 
 ### Probability Generating Functions
 
@@ -867,14 +884,17 @@ $$
 
 where $a(t) = A(t)/\nu$ is the concentration of $A$ molecules. We can solve this ODE numerically or solve the steady-state version to see that it predicts the long-run mean of $A(t)$ will be $\nu\sqrt{k_2/2k_1}$.
 
+@fig-dimer_all presents a synthesis of the three forms of analysis of the dimerisation process outlined above. In the left panel, we show sample paths of the process, together with the long-run mean obtained via analytic calculations (red dashed line) and the solution to the ODE model given by law of mass action (dashed black line). The law of mass action predicts a slightly lower mean value than the long-run mean, $M_s$, and these quantities differ in general for this model (which we will show in problem classes). We also plot $M_s \pm 2\sqrt{V_s}$ in the left-hand panel to show that these bounds give a good idea of the fluctuations of the process around its long-run mean. This works because Chebyshev's inequality tells us that any distribution with a finite mean and variance has approximately $75\%$ of its mass within two standard deviations of either side of the mean (where the standard deviation here is $\sqrt{V_s}$).
+
 ![Left: Sample paths compared to the solution of the mass action ODE model and to the long run mean and variance. Right: Comparison between the stationary distributed obtained analytically and the estimated PMF from simulations. Parameters: $A(0) = 15$, $k_1 = 0.005$, $k_2=1$.](images/dimerisation_figure.png){#fig-dimer_all width=100% fig-align="center"}
 
 The right-hand panel of @fig-dimer_all shows the estimated PMF of the dimerisation process at $t = 100$ using $1,000$ sample paths of the process obtained via the more efficient SSA. The solid red line denoted by "analysis" in the legend is the stationary distribution of the process calculated from an analytic formula based on the calculations of the preceding section (see problem classes for more details!).
 
-> **Do it yourself**  
-> Open the course [Github page](https://github.com/patterd2/MATH4411_Adv_Math_Bio) and try playing with the MATLAB script:  
-> `CH1_dimerisation_process.m`  
-> Try varying the parameters (time interval, initial conditions, reaction rates) to observe how the analysis presented above changes.
+::: {.doit #eggen1 style="font-size:0.9em; font-family:mainfont;"}
+Open the course [Github page](https://github.com/patterd2/MATH4411_Adv_Math_Bio) and try playing with the MATLAB script:  
+`CH1_dimerisation_process.m`  
+Try varying the parameters (time interval, initial conditions, reaction rates) to observe how the analysis presented above changes.
+:::
 
 ## The Gillespie Stochastic Simulation Algorithm
 
@@ -922,7 +942,7 @@ $$
 $$
 which can be verified as the correct probability by computing $\mathbb{P}[ \min(\tau_1,\dots,\tau_q) = \tau_i]$. Intuitively, we can think of the condition in step 4 as breaking up the interval $[0,1]$ into $q$ subintervals where the length of subinterval $j$ is proportional to $\alpha_j(t)$. We then draw $r_2 \sim U([0,1])$ and see which subinterval $r_2$ falls in; if $r_2$ falls in subinterval $j$, then reaction $j$ takes place.
 
-There are many ways to improve upon the algorithm outlined above and we will study some of them later in the course. Some improvements exploit special structure in the processes we are simulating, other improvements are more broadly applicable. For example, we only need to update the propensity functions $\alpha_i(t)$ which changed the last time a reaction took place. This often means that most propensity functions do not need to be changed after every reaction and offers significant speed up for systems with large numbers of reactions.
+There are many ways to improve upon the algorithm outlined above and this can be especially important for efficiently simulating processes that have a large number of reactions per unit time. Some improvements exploit special structure in the processes we are simulating, other improvements, such as the tau-leaping method [@cao2006efficient], are more broadly applicable. For example, we only need to update the propensity functions $\alpha_i(t)$ which changed the last time a reaction took place. This often means that most propensity functions do not need to be changed after every reaction and offers significant speed up for systems with large numbers of reactions.
 
 ### Gillespie SSA Example
 
@@ -945,13 +965,13 @@ $$
 \end{aligned}
 $$
 
-To simulate the process, we need to compute the overall propensity function for the process
+To simulate the process, we need to compute the total propensity function
 
 $$
 \alpha_0(t) = \alpha_1(t) + \alpha_2(t) + \alpha_3(t) + \alpha_4(t),
 $$
 
-to compute the next reaction time. If $\tau$ is the next reaction time, then the step to update the number of $A$ and $B$ molecules according to the Gillespie algorithm will be:
+in order to compute the next reaction time. If $\tau$ is the next reaction time, then the step to update the number of $A$ and $B$ molecules according to the Gillespie algorithm will be:
 
 $$
 A(t+\tau) = \begin{cases}
@@ -1016,9 +1036,9 @@ $$
 
 @fig-gillespie below shows some sample paths of the process with the corresponding solutions to the deterministic model overlaid for comparison (dashed black lines).
 
-![Sample paths and deterministic solutions. Parameters: $k_1 = 0.001$, $k_2 = 0.01$, $k_3 = 1.2$, $k_4 = 1$.](images/gillespie.png){#fig-gillespie width=100% fig-align="center"}
+![Sample paths and the deterministic mean predicted by the law of mass action. Parameters: $k_1 = 0.001$, $k_2 = 0.01$, $k_3 = 1.2$, $k_4 = 1$.](images/gillespie.png){#fig-gillespie width=100% fig-align="center"}
 
-We can gain more information about the dynamics of the process by running more and longer simulations. This allows us to estimate the stationary distribution which characterizes the asymptotic behaviour of the process. Figure @fig-gillespie2 shows the estimated stationary distribution in the left-hand panel, i.e. the joint PMF of $A(t)$ and $B(t)$ as $t \to \infty$. The right-hand panel of @fig-gillespie2 shows the marginal stationary distribution of $A(t)$, which can be obtained from the joint stationary distribution via the formula
+We can gain more information about the dynamics of the process by running more and longer simulations. This allows us to estimate the stationary distribution which characterizes the asymptotic behaviour of the process. @fig-gillespie2 shows the estimated stationary distribution in the left-hand panel, i.e. the joint PMF of $A(t)$ and $B(t)$ as $t \to \infty$. The right-hand panel of @fig-gillespie2 shows the marginal stationary distribution of $A(t)$, which can be obtained from the joint stationary distribution via the formula
 
 $$
 \phi(n) = \sum_{m = 0}^\infty \phi(n,m),
@@ -1053,7 +1073,7 @@ where $\phi(n) := \lim_{t\to\infty} \mathbb{P}[A(t) = n]$ and $\phi(n,m) := \lim
   - computing stationary distributions from CMEs
   - calculating and solving moment equations
   - compute/analyse probability generating functions
-- Describe the differences between and advantages/disadvantages of different approaches to studying a given chemical reaction process (i.e. mass action versus SSAs versus analytic approaches)
+- Describe the differences between and advantages/disadvantages of different approaches to studying a given chemical reaction process (i.e. mass action versus SSAs versus analytic approaches).
 
 ## References {.unnumbered}
 
