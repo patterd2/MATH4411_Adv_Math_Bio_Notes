@@ -1,7 +1,8 @@
 ---
 title: Stochastic Simulation of Chemical Reactions
+citeproc: true
 bibliography: references.bib
-
+bibliographystyle: apa
 ---
 
 The goal of this chapter is to introduce stochastic chemical reaction processes and some algorithms to simulate them numerically. We will also develop some analytic tools to study these processes and begin to discuss similarities and differences between deterministic and stochastic models of the same phenomena.
@@ -1048,7 +1049,7 @@ where $\phi(n) := \lim_{t\to\infty} \mathbb{P}[A(t) = n]$ and $\phi(n,m) := \lim
 
 ![Estimated stationary distributions. Parameters: $k_1 = 0.001$, $k_2 = 0.01$, $k_3 = 1.2$, $k_4 = 1$.](images/gillespie2.png){#fig-gillespie2 width=100% fig-align="center"}
 
-# Knowledge checklist {.unnumbered}
+## Knowledge checklist {.unnumbered}
 
 **Key topics:**
 
@@ -1075,9 +1076,5 @@ where $\phi(n) := \lim_{t\to\infty} \mathbb{P}[A(t) = n]$ and $\phi(n,m) := \lim
   - compute/analyse probability generating functions
 - Describe the differences between and advantages/disadvantages of different approaches to studying a given chemical reaction process (i.e. mass action versus SSAs versus analytic approaches).
 
-# References {.unnumbered}
+## References {.unnumbered}
 
-::: {#refs}
-:::
-
----

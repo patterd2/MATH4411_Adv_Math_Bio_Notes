@@ -22,6 +22,8 @@ format:
     # callout-icon: false
     minimal: false
     toc: true
+    nocite: |
+      @*
     self-contained: true
     title-block-banner: "#68246D"
     title-block-banner-color: white
@@ -38,12 +40,14 @@ format:
        \newcommand{\ddy}[2]{\frac{\partial{#1}}{\partial{#2}}}
       $$
       </p>
-  commonmark:
-    variant: -raw_html
+      
+
 
   pdf:
+    #cite-method: biblatex
     documentclass: scrreprt
     pdf-engine: pdflatex
+    toc: true
     include-in-header:
       text: |
        \usepackage[makeroom]{cancel}
