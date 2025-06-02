@@ -1,0 +1,400 @@
+---
+title: Deterministic vs Stochastic Models
+citeproc: true
+bibliography: references2.bib
+bibliographystyle: apa
+---
+
+The goal of this chapter is to build a deeper understanding of the qualitative differences that are possible between deterministic and stochastic models of the same system. We saw in Chapter 1 that the law of mass action can give good predictions of the average behaviour for zero and first order reactions.  Even the mean behaviour of higher-order reactions is not perfectly predicted by the analogous deterministic model, although the differences were not pronounced in the examples we have seen thus far. The examples we consider presently show that there can be dramatic differences in the qualitative behaviour of a stochastic reaction process and its deterministic mass action model. Moreover, these novel stochastic dynamics form the basis of current modelling work for a myriad of real-world systems, ranging from biological applications such as cell-fate dynamics and neuroscience, to ecological applications like coral-reef stability and vegetation dynamics [@fung2011alternative;@moris2016transition;@staver2011global].
+
+## Multistable Systems
+
+Consider the following stochastic reaction process involving a single chemical species $A$:
+
+$$
+3A \xrightarrow{k_1} 2A, \qquad 2A \xrightarrow{k_2} 3A, \qquad A \xrightarrow{k_3} \emptyset, \qquad \emptyset \xrightarrow{k_4} A.
+$$ {#eq-bistable_process}
+
+This process involves production, degradation, and several dimerisation-type reactions. If we apply the law of mass action to this process, we can derive a deterministic model for the average behaviour of the concentration of species $A$, i.e., $a(t) = A(t)/\nu$ where $\nu$ is the system volume.
+
+Invoking the law of mass action, multiplying the reaction rates by the concentrations for each reaction, we arrive at the following (approximate) deterministic model for the process:
+
+$$
+\frac{d}{dt} a(t) = -k_1 a(t)^3 + k_2 a(t)^2 -k_3 a(t) + k_4, \quad t \geq 0.
+$$ {#eq-bistable_mass_action}
+
+We can solve for the equilibrium solutions of this model by solving the cubic polynomial
+$$
+0 =  -k_1 a^3 + k_2 a^2 -k_3 a + k_4 =: f(a),
+$$
+and we can readily evaluate their stability by computing the sign of the "Jacobian", $f'(a)$, of the system at each equilibrium point. The number of steady states and their stability can vary with the system parameters, but, as an example of the possible dynamics, take
+
+$$
+k_1 = 0.00025, \qquad k_2 = 0.18, \qquad k_3 = 37.5, \qquad k_4 = 2200.
+$$
+
+In this parameter regime, we find three steady states:
+$$
+\bar{A}_1 = 100, \qquad \bar{A}_2 = 220, \qquad \bar{A}_3 = 400.
+$$
+
+Linear stability analysis tells us that $\bar{A}_1$ and $\bar{A}_3$ are stable, while $\bar{A}_2$ is unstable. Since the ODE above is one dimensional, $f(0)>0$, and $f(a)<0$ for all $a>0$ sufficiently large, all trajectories must end up at either $\bar{A}_1$ or $\bar{A}_3$ as $t \to\infty$. Trajectories cannot cross the (unstable) solution, $\bar{A}_2$, and thus $\lim_{t\to\infty} A(t) = \bar{A}_1$ if $A(0) < \bar{A}_2$ and $\lim_{t\to\infty} A(t) = \bar{A}_3$ if $A(0) > \bar{A}_2$. Our qualitative analysis of the dynamics is illustrated in the left-hand panel of @fig-bistable where we plot trajectories against time for different initial conditions with the equilibrium solutions denoted by the dashed black lines.
+
+The right-hand panel of @fig-bistable is a one-parameter bifurcation diagram of the system above where we have allowed the production rate parameter, $k_3$, to vary. The values of $k_1$, $k_2$, and $k_4$ are fixed to the same values as above. As $k_3$ varies, we track the number of solutions and their stability; stable solutions are in red, while unstable solutions are in black. We observe that the system has two stable solutions for $k_3$ between $36$ and $38.9$ approximately. In this **bistable regime**, the dynamics are qualitatively as described above (where we had $k_3 = 37.5$). The bistable regime begins and ends with **saddle-node bifurcations** and the system has only one stable solution before/after these bifurcation points.
+
+![**Left:** Solutions of the deterministic model for different initial conditions. **Right:** One parameter bifurcation diagram for the deterministic model varying the production rate parameter $k_3$. Parameters: $k_1=0.00025$, $k_2 = 0.18$, $k_3 = 37.5$ (left), $k_4=2200$.](images/multiple_stable_det.png){#fig-bistable width=100% fig-align="center"}
+
+Bifurcation diagrams with the same qualitative structure as in @fig-bistable are found in many real-world applications and may have very important implications in a given applied scenario. For example, suppose that the upper stable (red) branch represents a state with high tree cover and the lower stable branch represents a state with low tree cover. We would care enormously if an external process (e.g., climate change) increased the bifurcation parameter past the upper saddle-node bifurcation ($k_3 \approx 38.9$) and caused the system to suddenly drop to a much lower tree cover state! We can imagine similar potential catastrophes if the y-axis represented the abundance of a certain species. **However, if the parameter $k_3$ does not change value, then the deterministic model predicts either one steady-state solution or the other; there can be no switching between the alternative stable states.**
+
+::: {.doit #eggen1 style="font-size:0.9em; font-family:mainfont;"}
+Write down the propensity function for the process @eq-bistable_process and hence sketch the pseudocode for the Gillespie SSA to simulate the process. What is the most efficient way to write the conditions for updating the number of $A$ molecules?
+:::
+
+We begin our analysis of the stochastic reaction process by simulating the system using the Gillespie algorithm.  @fig-bistable_switch shows some sample paths of the process (blue) and the corresponding trajectory of the deterministic model @eq-bistable_mass_action (red). In the left-hand panel of @fig-bistable_switch, we observe reasonable agreement between the respective solutions as we only consider a very short time interval. However, in the right-hand panel, the stochastic solutions show qualitatively different behaviour once we run the process for long enough. In particular, the blue sample paths cross the unstable solution of the deterministic model ($\bar{A}_2$, middle black dashed line) and switch between spending time near each of the stable solutions of the deterministic model ($\bar{A}_1$ and $\bar{A}_3$). **This switching behaviour is impossible in the deterministic model and is an entirely new phenomenon introduced by the stochasticity of the process** @eq-bistable_process.
+
+![Comparison between deterministic model trajectories and simulations of the process @eq-bistable_process on short and long time intervals. Parameters: $k_1=0.00025$, $k_2 = 0.18$, $k_3 = 37.5$, $k_4=2200$.](images/bistable_switch.png){#fig-bistable_switch width=100% fig-align="center"}
+
+From an applied perspective, this **noise-induced (attractor) switching** introduces a new possibility when studying systems with alternative stable states. Even if the parameters of the system do not change, the system may spontaneously shift from one stable state to another due to stochastic fluctuations! The **mean switching time** is the average time the system spends in one stable state or the other. In general, it can depend on which state the system starts in as it may be easier to switch in one direction compared to the reverse transition. The mean switching time can give us a measure of how stable the system is to random perturbations and is often used as a measure of a system's stability or "resilience". The mean switching time can be estimated from simulations of a model and there are also analytic approaches for its computation that we will study later in the course.
+
+::: {.doit #eggen1 style="font-size:0.9em; font-family:mainfont;"}
+Open the course [Github page](https://github.com/patterd2/MATH4411_Adv_Math_Bio) and try playing with the MATLAB script
+```
+CH2_bistable_process.m
+```
+to see how the switching frequency varies as you change system parameters.
+:::
+
+We can study the chemical master equations of the process @eq-bistable_process to gain more insight into the nature of this switching phenomenon and to understand how much time the system is expected to spend in each stable state.
+
+If we consider $dt>0$ sufficiently small, we can reason in the usual way that the change in the PMF $P_n(t) := \mathbb{P}[A(t) = n]$ over the interval $[t, t+dt)$ is given by
+
+$$
+\begin{aligned}
+P_n(t+dt) &= \left( 1 - \frac{k_1}{\nu^2} n(n-1)(n-2)dt - \frac{k_2}{\nu} n(n-1)dt - k_3 n dt - k_4 \nu dt  \right)P_n(t) \\
+&\quad + \frac{k_1}{\nu^2} (n+1)n(n-1)P_{n+1}(t)\,dt + \frac{k_2}{\nu} (n-1)(n-2)P_{n-1}(t)\,dt \\
+&\quad + k_3 (n+1) P_{n+1}(t)\,dt + k_4 \nu P_{n-1}(t)\,dt.
+\end{aligned}
+$$
+
+Rearranging and letting $dt \downarrow 0$ thus yields the chemical master equations:
+
+$$
+\begin{aligned}
+\frac{d}{dt} P_n &= \frac{k_1}{\nu^2} (n+1)n(n-1)P_{n+1} + \frac{k_2}{\nu} (n-1)(n-2)P_{n-1} + k_3 (n+1) P_{n+1} + k_4 \nu P_{n-1} \\
+&\quad - \frac{k_1}{\nu^2} n(n-1)(n-2)P_n - \frac{k_2}{\nu} n(n-1)P_n - k_3 n P_n - k_4 \nu P_n, \quad n \geq 0,
+\end{aligned}
+$$ {#eq-bistable_CME}
+
+where we have suppressed the $t$ dependence in $P_n$ for brevity. We also adopt our usual convention that $P_n \equiv 0$ for all $n < 0$.
+
+We will now consider the asymptotic behaviour of the process and thus proceed to the steady state version of the CMEs in order to compute the stationary distribution, $\phi$. The steady-state version of @eq-bistable_CME is given by:
+
+$$
+\begin{aligned}
+0 &= \frac{k_1}{\nu^2} (n+1)n(n-1)\phi(n+1) + \frac{k_2}{\nu} (n-1)(n-2)\phi(n-1) + k_3 (n+1) \phi(n+1) \\
+&\quad + k_4 \nu \phi(n-1) 
+- \frac{k_1}{\nu^2} n(n-1)(n-2)\phi(n) - \frac{k_2}{\nu} n(n-1)\phi(n) - k_3 n \phi(n) - k_4 \nu \phi(n),
+\end{aligned}
+$$
+
+for $n \geq 0$ and $\phi(n) = 0$ for $n<0$. Recursively solving these equations, we can write the solution in terms of $\phi(0)$ as
+
+$$
+\phi(n) = \phi(0) \prod_{i = 0}^{n-1} \frac{(k_2/\nu)i(i-1) + k_4\nu  }{(k_1/\nu^2)(i+1)i(i-1)+ k_3(i+1) }, \quad n \geq 1.
+$$ {#eq-bistable_stationary}
+
+We know that $\sum_{n = 0}^\infty \phi(n) = 1$, so we can calculate $\phi(n)$ for a large range of values of $n$ and then normalize to find the stationary distribution in practice.
+
+@fig-bistable_stationary shows the results from using 10,000 simulations of the process to estimate the PMF at a large time compared to evaluating the formula @eq-bistable_stationary for the stationary distribution. We see excellent agreement between the analytic and direct simulation approaches with both showing a distinctly bimodal distribution. The peaks of the distribution are centred on the stable states of the deterministic model @eq-bistable_mass_action, i.e. $\bar{A}_1 = 100$ and $\bar{A}_3 = 400$, with a local minimum between these values around $220$, the value of $\bar{A}_2$. Moreover, the peak at $A = 100$ is 8 times higher than the peak at $A=400$, suggesting that the system will tend to spend much more time close to $A=100$ in this parameter regime.
+
+![Comparison of the stationary distribution and the estimated long term behaviour from 10,000 simulations of the process. Parameters: $k_1=0.00025$, $k_2 = 0.18$, $k_3 = 37.5$, $k_4=2200$.](images/bistable_stationary.png){#fig-bistable_stationary width=60% fig-align="center"}
+
+We will return to the switching time problem later in the course and develop further tools to estimate the time a stochastic system spends near a stable state before switching to another.
+
+## Self-induced Stochastic Resonance
+
+In this section, we will use a relatively simple chemical reaction process to illustrate another distinct kind of novel noise-induced dynamics known as **stochastic resonance**. Consider the two-species reaction process given by
+
+$$
+2A + B \xrightarrow{k_1} 3A, \quad \emptyset \xrightarrow{k_2} A, \quad A \xrightarrow{k_3} \emptyset, \quad \emptyset \xrightarrow{k_4} B.
+$$ {#eq-resonance_proc}
+
+Letting $a(t) = A(t)/\nu$ and $b(t) = B(t)/\nu$, we can use the law of mass action to write down an approximate deterministic description of the average behaviour of the process @eq-resonance_proc. Our deterministic approximation is given by
+
+$$
+\begin{aligned}
+\frac{d}{dt} a(t) &= k_1 a(t)^2 b(t) + k_2 -k_3 a(t), \\
+\frac{d}{dt} b(t) &= -k_1 a(t)^2 b(t) + k_4.
+\end{aligned}
+$$ {#eq-res_mass}
+
+::: {.doit #eggen1 style="font-size:0.9em; font-family:mainfont;"}
+Write down the pseudocode for the Gillespie SSA to simulate the process @eq-resonance_proc.
+:::
+
+We will proceed to simulate the process @eq-resonance_proc and compare the resulting dynamics with those predicted by the approximate deterministic model @eq-res_mass. For the purposes of comparing dynamics, we choose the parameter set
+
+$$
+k_1 = 0.0004, \qquad k_2 = 50, \qquad k_3 = 10, \qquad k_4 = 25.
+$$
+
+@fig-res1 A shows the evolution of the number of $A$ molecules in both the stochastic and deterministic models; we immediately notice that the two models exhibit qualitatively different dynamics. The deterministic model quickly tends to a steady-state, while the stochastic model shows a reasonably regular pattern of oscillations (with some irregularity due to the stochasticity of the process). @fig-res1 B shows both the $A$ and $B$ molecule evolutions against time and shows regular oscillations in both molecule numbers, with much more abrupt spikes in species $A$ compared to the more gradual spikes for species $B$. What is the source of this dramatic disagreement between the stochastic and deterministic dynamics?
+
+![A: Comparison of the stochastic dynamics given by @eq-resonance_proc and deterministic dynamics of the ODEs given by @eq-res_mass. B: Time evolutions of the number of $A$ and $B$ molecules for a realisation of the stochastic process @eq-resonance_proc.](images/resonance_1.png){#fig-res1 width=100% fig-align="center"}
+
+To understand the divergence in qualitative behaviour between the stochastic and deterministic dynamics, we plot the trajectories of both models in the phase space in @fig-res2. @fig-res2 A and B show the trajectories of the process @eq-resonance_proc in blue, with a single path in panel A and multiple paths in panel B. In both panels, the deterministic solution is plotted in red and it approaches the fixed point where the nullclines of the system intersect (green curves). The parabolic-shaped green curve is the $a$ nullcline of @eq-res_mass (i.e., $da/dt = 0$), while the almost vertical green line is the $b$ nullcline ($db/dt = 0$). In @fig-res2 C, we plot the direction field of the deterministic system @eq-res_mass, along with several solutions of the deterministic system. Blue ticks mark the start of each deterministic solution, with a red tick marking the endpoint of the trajectory. Solutions starting left of the $a$ nullcline proceed directly to the fixed point, but trajectories starting to the right of this nullcline undergo a long sojourn to the right, before eventually coming back to the fixed point. **There is only one fixed point of the deterministic system in this parameter regime and it is globally stable**, meaning all trajectories are attracted to it for any initial condition.
+
+![A/B: One/multiple trajectories of the process @eq-resonance_proc plotted in the phase space. C: Direction field and solutions to @eq-res_mass plotted in the phase space. [$k_4 = 25.$]](images/resonance_2.png){#fig-res2 width=100% fig-align="center"}
+
+The stochastic trajectories follow the red deterministic trajectory up the left-hand part of the $a$ nullcline, but when the blue trajectory crosses to the right of the $a$ nullcline, it is then sent on a long excursion to the right; this long excursion to the right corresponds to the spike in the number of $A$ molecules (and the rapid drop in the number of $B$ molecules) observed in @fig-res1. @fig-res2 B suggests that the process crosses the $a$ nullcline with higher probability the higher the number of $B$ molecules, but in principle this crossing could occur anywhere along the nullcline with a large enough stochastic fluctuation. This spontaneous crossing of the nullcline is impossible in the deterministic model. We call this phenomenon of noise-induced oscillations **self-induced stochastic resonance**.
+
+If we increase the parameter $k_4$ from $25$ to $100$, the dynamics of the deterministic model change and enter an oscillatory regime. @fig-res3 shows a comparison of the stochastic and deterministic dynamics in this regime. We now observe qualitative agreement between the dynamics, although @fig-res3 shows that the period of the oscillations is not in exact agreement. The key change here is that increasing $k_4$ shifts the $b$ nullcline, and hence the fixed point, to the right. Note that the $a$ nullcline does not depend on $k_4$. Now all deterministic trajectories are sent around the fixed point and take the long excursion to the right, resulting in a stable periodic solution akin to what we observed previously for the stochastic trajectories with $k_4 = 25$.
+
+![A: Comparison of deterministic and stochastic trajectories in the phase space.  B: Time evolution of the number of $A$ molecules in the stochastic and deterministic models. [$k_4 = 100.$]](images/resonance_3.png){#fig-res3 width=80% fig-align="center"}
+
+As we increased $k_4$ from $25$ to $100$, we passed through a bifurcation point of the ODE @eq-res_mass. At this bifurcation, the fixed point where the nullclines intersect became unstable and stable periodic solutions emerged. Thus, another interpretation of the stochastic resonance phenomenon we observed in this model is that the stochastic fluctuations in the process @eq-resonance_proc brought about the onset of oscillations earlier (i.e., for a lower value of $k_4$) than predicted by the deterministic model.
+
+The example presented above illustrates that oscillations can be triggered by a noisy process pushing a system over a threshold. In fact, this situation is observed in an array of applications in mathematical biology. For example, this motif is the basis of intense study in neuroscience, where the threshold represents the spiking threshold for a neuron to fire and transmit information to other neurons across the brain. Two of the most well-known models in neuroscience, the Hodgkin-Huxley model and (its simpler phenomenological counterpart) the Fitzhugh-Nagumo model, both exhibit stochastic resonance [@longtin1993stochastic]. Later in the course, we will develop the analytic tools to study stochastic resonance in greater detail and understand how it is impacted by both the level of noise and the specific dynamics (geometry) of the system.
+
+::: {.doit #eggen1 style="font-size:0.9em; font-family:mainfont;"}
+Open the course [Github page](https://github.com/patterd2/MATH4411_Adv_Math_Bio) and try playing with the MATLAB script
+```
+CH2_stochastic_resonance.m
+```
+to see how the stochastic and deterministic dynamics vary as you change the value of the $k_4$ parameter.
+
+Can you find the value of $k_4$ where stable oscillations start in the system @eq-res_mass? What do the dynamics near the bifurcation point suggest about the type of bifurcation that occurs?
+:::
+
+## Stochastic Focusing
+
+The first two sections of this chapter primarily involved the interplay between nonlinearity and stochasticity; this interplay led to novel noise-induced dynamics, and dramatic disagreement between the stochastic dynamics and the law of mass action predictions. Next, we illustrate a phenomenon that relies on nonlinearity and noise, as well as the discrete nature of the underlying process.
+
+Consider the stochastic reaction process given by
+
+$$
+\emptyset \xrightarrow{k_1} C \xrightarrow{k_2} B \xrightarrow{k_3} \emptyset, \quad A + C \xrightarrow{k_4} A, \quad \emptyset \xrightarrow{k_5} A \xrightarrow{k_6} \emptyset.
+$$ {#eq-stoch_focusing}
+
+The only second order or higher reaction in the process @eq-stoch_focusing is the middle reaction, in which $C$ molecules are degraded by the presence of $A$ molecules. $A$ influences $C$, which in turn regulates the production of $B$ molecules, but $A$ is not itself influenced by $C$. Hence $A$ is a pure production-degradation process of the type we previously studied. $A$ influences $B$ indirectly via its impact on $C$.
+
+We begin our analysis of this process by writing down the law of mass action deterministic model for the process. As usual, we write the model for the concentrations (rather than the absolute numbers) of the various chemical species:
+
+$$
+\begin{aligned}
+\frac{d}{dt}a(t) &= k_5 - k_6 a(t), \\
+\frac{d}{dt}b(t) &= k_2 c(t) - k_3 b(t), \\
+\frac{d}{dt}c(t) &= k_1 - k_2 c(t) - k_4 a(t) c(t),
+\end{aligned}
+$$ {#eq-sf_mass}
+
+where $a(t) = A(t)/\nu$ and so on.
+
+We can immediately solve for the fixed point of this system,
+$$
+\bar{a} = \frac{k_5}{k_6}, \quad \bar{b} = \frac{k_2 \bar{c}}{k_3}, \quad \bar{c} = \frac{k_1}{k_2 + k_4 \bar{a}},
+$$
+which is stable for all reasonable parameter choices. We will consider a scenario in which almost all of the parameters are fixed, but we will allow the production rate of $A$, $k_5$, to switch values as time progresses. Initially, we choose
+
+$$
+k_1 = 100, \quad k_2 = 1000, \quad k_3 = 0.01,\quad  k_4 = 9900, \quad k_6 = 100,
+$$
+
+and
+
+$$
+k_5(t) = 
+\begin{cases}
+1000, & t< 10, \\
+500, & t\geq 10.
+\end{cases}
+$$
+
+Hence if $\bar{A}$ and $\bar{B}$ denote the steady state number of molecules of species $A$ and $B$ respectively, we expect that the system will switch steady states as the value of $k_5$ switches. In other words, based on the formulae above for $\bar{a}$ and $\bar{b}$, we should have
+
+<div style="display: flex; gap: 2em;">
+<div>
+
+$$
+\bar{A} = \begin{cases}
+    10, & t < 10,\\
+    5, & t \geq 10,
+\end{cases}
+$$
+
+</div>
+<div>
+
+$$
+\bar{B} = \begin{cases}
+    100, & t < 10,\\
+    198, & t \geq 10,
+\end{cases}
+$$
+
+</div>
+</div>
+
+for this parameter set.
+
+![Left: Dynamics of the number of $A$ molecules versus time. Right: Dynamics of the number of $B$ molecules versus time.](images/stochastic_forcing_1.png){#fig-sf1 width=100% fig-align="center"}
+
+@fig-sf1 shows 10 simulations of the process @eq-stoch_focusing with the solution to the deterministic model @eq-sf_mass overlaid in black for comparison. There is excellent agreement between the mean behaviour predicted by @eq-sf_mass for the average number of $A$ molecules in the left panel of @fig-sf1. However, we observe a large discrepancy between the number of $B$ molecules observed via the SSA and the mean number predicted by @eq-sf_mass after time $t=10$ in the right-hand panel of @fig-sf1. Species $B$ is more sensitive to the change in $k_5$ than species $A$; this increased sensitivity must be somehow due to the way in which this change is transmitted to $B$ via $C$ (whereas $A$ experiences the change in $k_5$ directly). This phenomenon of enhanced sensitivity to noise is called **stochastic focusing**.
+
+Firstly, we can understand why the agreement is so good between the two models for the number of $A$ molecules. The dynamics of $A$ are a production-degradation process (the number of $A$ molecules is only impacted by the final pair of reactions in @eq-stoch_focusing) and thus we know from Chapter 1 that the stochastic mean of $A$, $M_A$, obeys the evolution equation
+
+$$
+\frac{d}{dt} M_A(t) = k_5 \nu - k_6 M_A.
+$$
+
+Hence the long run stochastic mean, $M_{A,s}$, is given by
+
+$$
+M_{A,s} = \frac{k_5 \nu}{k_6},
+$$
+
+and so for our parameter set, we expect to observe
+
+$$
+M_{A,s} = \begin{cases}
+10, & t < 10,\\
+5, & t \geq 10,
+\end{cases}
+$$
+
+which is exactly as shown in the left-hand panel of @fig-sf1. To show that the stochastic fluctuations of $A$ about the mean value $M_{A,s}$ are an essential component of the stochastic focusing phenomenon we observed above, we make $A(t)$ a deterministic process equal to its mean value, i.e., let
+
+$$
+A(t) = \begin{cases}
+10, & t < 10,\\
+5, & t \geq 10.
+\end{cases}
+$$ {#eq-A_det}
+
+Our deterministic model now becomes
+
+$$
+\begin{aligned}
+\frac{d}{dt}b(t) &= k_2 c(t) - k_3 b(t), \\
+\frac{d}{dt}c(t) &= k_1 - k_2 c(t) - k_4 a(t) c(t),
+\end{aligned}
+$$ {#eq-sf_mass_det}
+
+with $a(t) = A(t)/\nu$ where $A(t)$ is given by the formula @eq-A_det. Thus the species $B$ and $C$ are still stochastic processes but take $A(t)$ as deterministic input. The result of simulating this new process is shown in @fig-sf2 with the solution to @eq-sf_mass_det overlaid in black.
+
+![Left: The number of $A$ molecules versus time as given by the formula @eq-A_det. Right: Dynamics of the number of $B$ molecules versus time.](images/stochastic_forcing_2.png){#fig-sf2 width=100% fig-align="center"}
+
+As expected, we no longer observe stochastic focusing as the stochastic dynamics now agree very well with the predictions of the deterministic model, confirming that the fluctuations in $A$ are an indispensable aspect of the focusing phenomenon. Moreover, the equations @eq-sf_mass_det are linear and so it can be shown that they are the exact equations for the stochastic means of $B$ and $C$. Intuitively, we have essentially replaced the 2nd order (nonlinear) reaction in the original process @eq-stoch_focusing with the first order (linear) reaction
+
+$$
+C \xrightarrow{k_4 A(t)} \emptyset.
+$$
+
+The fluctuations in $A$ and the nonlinear nature of the reaction between $A$ and $C$ are necessary but not sufficient for stochastic focusing. The final ingredient that causes the focusing phenomenon is the discrete nature of the process. In particular, the fact that the number of molecules of $C$ is extremely low in our chosen parameter regime. The average number of $C$ molecules predicted by the law of mass action at steady state is given by
+
+$$
+\bar{C}_s = \begin{cases}
+0.001, & t < 10,\\
+0.00198, & t \geq 10.
+\end{cases}
+$$
+
+Thus we can no longer even interpret $\bar{C}_s$ as a number of molecules. In @fig-sf3 we simulate the system with the original parameter set once more and observe the dynamics of the $C$ component. The number of $C$ molecules jumps between zero and one, meaning that sometimes there are no $C$ molecules present to produce $B$ molecules. The presence or absence of $C$ is of course set by the fluctuations in $A$.
+
+![Dynamics of the number of $C$ molecules versus time.](images/sf5.png){#fig-sf3 width=60% fig-align="center"}
+
+To demonstrate that this low number of $C$ molecules is essential for stochastic focusing to occur, we can change the system parameters to ensure a high average level of $C$ molecules. We choose
+$$
+k_1 = 100, \quad k_2 = 0.1, \quad k_3 = 0.01,\quad  k_4 = 0.99, \quad k_6 = 100,
+$$
+and this shifts the steady state prediction for $\bar{C}_s$ to
+$$
+\bar{C}_s = \begin{cases}
+    10, & t < 10,\\
+    19.8, & t \geq 10.
+\end{cases}
+$$
+
+The stochastic and deterministic dynamics for this new parameter set are shown in @fig-sf4. The average level of $C$ is now much higher and there is now very good agreement between the mass action prediction and the stochastic dynamics of the number of $B$ molecules, i.e., we no longer observe stochastic focusing.
+
+![Dynamics of the number of $A$, $B$ and $C$ molecules versus time.](images/stochastic_forcing_3.png){#fig-sf4 width=100% fig-align="center"}
+
+To briefly summarize our analysis of the process @eq-stoch_focusing and the stochastic focusing phenomenon thus far:
+
+- Nonlinearity (higher order reactions) are a necessary component for stochastic focusing (i.e., the reaction $A + C \to A$ in this example),
+- Fluctuations (noise) are an essential component of stochastic focusing,
+- Small numbers of molecules in higher order reactions may amplify noise/fluctuations to cause stochastic focusing.
+
+Finally, we will derive a more sophisticated deterministic approximation of the process @eq-stoch_focusing that will allow us to analytically check if a specific system is expected to exhibit stochastic focusing.
+
+Since $A(t)$ is a production-degradation process, we know that its stationary distribution is given by
+
+$$
+\phi_A(n) = \frac{1}{n!} (M_{A,s})^n e^{-M_{A,s}}, \quad \text{where } M_{A,s} = \frac{k_5}{k_6}
+$$
+
+i.e., $A(t)$ is approximately Poisson distributed with parameter $k_5/k_6$ at large times. Next, suppose that $k_4 \gg k_6$ so that $C$ evolves on a much faster time scale than $A$; this allows us to assume that $A(t)$ is approximately at steady state with respect to $C$ and hence we can assume $A(t)$ is given by the Poisson distribution above.
+
+If $A(t) = n$ at a given time, then $C$ is essentially subject to the reaction dynamics:
+
+$$
+\emptyset \xrightarrow{k_1} C \xrightarrow{k_2 + k_4 n} \emptyset,
+$$
+
+where we write the $\emptyset$ symbol on the right as we choose not to distinguish between $C$ molecules that are degraded and those that become molecules of $B$; from the perspective of tracking the number of $C$ molecules, these two fates are equivalent. In other words, $C$ is also a production-degradation process and thus we can write down its stationary distribution exactly as we did for $A$. Therefore
+$$
+\phi_{C,n}(m) = \frac{(\mu_n)^m}{m!} e^{-\mu_n}, \quad \text{where } \mu_n = \frac{k_1 \nu}{k_2 + n k_4/\nu}.
+$$
+Note that this stationary distribution for $C$ (i.e., the probability that $C(t)=m$ for $t$ large) is dependent on the value of $A(t)=n$ and can thus be thought of as a conditional stationary distribution where we have conditioned on the value of $A$.
+
+We saw above that stochastic focusing only takes place when the average value of $C$ is much less than $1$ and so we want to focus our approximation on the case $\mu_n \ll 1$. In this limit, the Poisson distribution for the behaviour of $C$ tells us that
+
+$$
+\mathbb{P}[1 \,C \text{ molecule present}\, |\, A(t) = n] = \phi_{C,n}(1) \approx \mu_n,
+$$
+
+We can then estimate that the average probability of $1$ molecule $C$ being present is given by
+
+$$
+\sum_{n=0}^\infty \mu_n \phi_A(n) = \sum_{n = 0}^\infty \frac{k_1 \nu }{k_2 + n k_4 /\nu }\frac{1}{n!}(M_{A,s})^n e^{-M_{A,s}},
+$$ {#eq-mean_small}
+
+where $M_{A,s}$ is the predicted steady-state value of $A(t)$ given above. The formula @eq-mean_small takes into account the small number of $C$ particles as well as the fluctuations in $A$ since we have used the stationary distribution of $A$ in the averaging.
+
+In contrast to the formula @eq-mean_small, the law of mass action predicts that the average number of $C$ particles will be
+$$
+\frac{k_1 \nu}{k_2 + M_{A,s}k_4/\nu}.
+$$ {#eq-mean_dumb}
+
+This formula neglects the fluctuations in $A$ by simply using its mean value and also doesn't account for the small number of $C$ molecules in any way. To check for potential stochastic focusing, we can check for substantial disagreement between the predictions for the number of $C$ molecules between the formulae @eq-mean_small and @eq-mean_dumb.
+
+Since $B$ depends linearly on $C$ (i.e., through only a first order reaction), we can estimate the average number of $B$ molecules even for low copy numbers of $C$ using formula @eq-mean_small by simply multiplying by $k_2/k_3$. If we evaluate these formulae with our original parameter set (which exhibited stochastic focusing), we obtain the estimates
+$$
+M_{B,s} = \begin{cases}
+    113.1, & t < 10,\\
+    316.7, & t \geq 10,
+\end{cases}
+$$
+which predict exactly the $B$ molecule dynamics observed in @fig-sf1.
+
+:::{.callout-note}
+Stochastic focusing is of particular relevance in gene regulatory networks where noisy signals are filtered through complex interaction networks, often with very low copy numbers of specific genes present. Stochastic focusing is a mechanism that allows a regulatory signal to amplify a noisy signal in order to respond hypersensitively for precise control [@eldar2010functional]. If you want to read more about how this phenomenon can be studied mathematically, and applied to understand the dynamics of gene networks, the seminal paper [@paulsson2000stochastic] is the place to start.
+:::
+
+## Knowledge checklist {.unnumbered}
+
+**Key topics:**
+
+1. Multistable systems (noise-induced switching)
+2. Stochastic resonance (noise-induced oscillations)
+3. Stochastic focusing (nonlinearity and discreteness can amplify noisy signals)
+
+**Key skills:**
+
+- Identify and explain dramatic differences between stochastic and deterministic models of the same underlying system (especially those caused by stochastic switching, resonance, or focusing).
+- Explain the mathematical origin of various noise-induced dynamical phenomena, including stochastic switching, resonance, or focusing.
+- Analyse systems to determine if they may exhibit stochastic switching, resonance, or focusing (e.g., using SSAs, mass action approximation, and probabilistic tools).
+- Provide examples of specific systems/processes and real-world applications where stochastic switching, resonance, or focusing occur.
+
+## References {.unnumbered}
+
