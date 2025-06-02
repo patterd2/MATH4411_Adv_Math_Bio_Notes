@@ -38,6 +38,8 @@ format:
        \newcommand{\ddy}[2]{\frac{\partial{#1}}{\partial{#2}}}
       $$
       </p>
+  commonmark:
+    variant: -raw_html
 
   pdf:
     documentclass: scrreprt
