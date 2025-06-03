@@ -46,7 +46,7 @@ The right-hand panel of @fig-bistable is a one-parameter bifurcation diagram of 
 
 Bifurcation diagrams with the same qualitative structure as in @fig-bistable are found in many real-world applications and may have very important implications in a given applied scenario. For example, suppose that the upper stable (red) branch represents a state with high tree cover and the lower stable branch represents a state with low tree cover. We would care enormously if an external process (e.g., climate change) increased the bifurcation parameter past the upper saddle-node bifurcation ($k_3 \approx 38.9$) and caused the system to suddenly drop to a much lower tree cover state! We can imagine similar potential catastrophes if the y-axis represented the abundance of a certain species. **However, if the parameter $k_3$ does not change value, then the deterministic model predicts either one steady-state solution or the other; there can be no switching between the alternative stable states.**
 
-::: {.doit #eggen1 style="font-size:0.9em; font-family:mainfont;"}
+::: {.doit #eggen1 style="font-size:1.0em; font-family:mainfont;"}
 Write down the propensity function for the process @eq-bistable_process and hence sketch the pseudocode for the Gillespie SSA to simulate the process. What is the most efficient way to write the conditions for updating the number of $A$ molecules?
 :::
 
@@ -56,7 +56,7 @@ We begin our analysis of the stochastic reaction process by simulating the syste
 
 From an applied perspective, this **noise-induced (attractor) switching** introduces a new possibility when studying systems with alternative stable states. Even if the parameters of the system do not change, the system may spontaneously shift from one stable state to another due to stochastic fluctuations! The **mean switching time** is the average time the system spends in one stable state or the other. In general, it can depend on which state the system starts in as it may be easier to switch in one direction compared to the reverse transition. The mean switching time can give us a measure of how stable the system is to random perturbations and is often used as a measure of a system's stability or "resilience". The mean switching time can be estimated from simulations of a model and there are also analytic approaches for its computation that we will study later in the course.
 
-::: {.doit #eggen1 style="font-size:0.9em; font-family:mainfont;"}
+::: {.doit #eggen1 style="font-size:1.0em; font-family:mainfont;"}
 Open the course [Github page](https://github.com/patterd2/MATH4411_Adv_Math_Bio) and try playing with the MATLAB script
 ```
 CH2_bistable_process.m
@@ -128,7 +128,7 @@ $$
 \end{aligned}
 $$ {#eq-res_mass}
 
-::: {.doit #eggen1 style="font-size:0.9em; font-family:mainfont;"}
+::: {.doit #eggen1 style="font-size:1.0em; font-family:mainfont;"}
 Write down the pseudocode for the Gillespie SSA to simulate the process @eq-resonance_proc.
 :::
 
@@ -156,7 +156,7 @@ As we increased $k_4$ from $25$ to $100$, we passed through a bifurcation point 
 
 The example presented above illustrates that oscillations can be triggered by a noisy process pushing a system over a threshold. In fact, this situation is observed in an array of applications in mathematical biology. For example, this motif is the basis of intense study in neuroscience, where the threshold represents the spiking threshold for a neuron to fire and transmit information to other neurons across the brain. Two of the most well-known models in neuroscience, the Hodgkin-Huxley model and (its simpler phenomenological counterpart) the Fitzhugh-Nagumo model, both exhibit stochastic resonance [@longtin1993stochastic]. Later in the course, we will develop the analytic tools to study stochastic resonance in greater detail and understand how it is impacted by both the level of noise and the specific dynamics (geometry) of the system.
 
-::: {.doit #eggen1 style="font-size:0.9em; font-family:mainfont;"}
+::: {.doit #eggen1 style="font-size:1.0em; font-family:mainfont;"}
 Open the course [Github page](https://github.com/patterd2/MATH4411_Adv_Math_Bio) and try playing with the MATLAB script
 ```
 CH2_stochastic_resonance.m

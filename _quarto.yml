@@ -11,6 +11,7 @@ book:
     - index.qmd
     - chap-one.qmd
     - chap-two.qmd
+    - chap-three.qmd
     
 
 format:
@@ -70,9 +71,9 @@ filters:
 custom-numbered-blocks:
   classes:
     eg:
-      collapse: True
+      collapse: False
       boxstyle: foldbox.simple
-      colors: [e7efea, 53b57b]
+      colors: [E7D6EA, 68246D]
       label: Example
     doit:
       collapse: False
