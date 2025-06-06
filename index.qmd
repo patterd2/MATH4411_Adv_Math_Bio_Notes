@@ -62,10 +62,11 @@ The lecture notes are designed to be sufficient for the course and hence student
 
 - **Erban, R. & Chapman, S.J.** *Stochastic Modelling of Reaction-Diffusion Processes*, Vol. 60, Cambridge University Press, 2020.
 
-Supplementary material can also be found in:
+Supplementary material and further reading:
 
-- **Murray, J.D.** *Mathematical Biology: II: Spatial Models and Biomedical Applications*, Vol. 3, Springer, 2003.
+- **Durrett, R. & Levin, S.** *The importance of being discrete (and spatial)*, Theoretical Population Biology, 46(3), 363-394, 1994.
 - **Keener, J.P.** *Biology in Time and Space: A Partial Differential Equation Modeling Approach*, Vol. 50, American Mathematical Society, 2021.
+- **Murray, J.D.** *Mathematical Biology: II: Spatial Models and Biomedical Applications*, Vol. 3, Springer, 2003.
 
 ## Contact Information
 
