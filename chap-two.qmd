@@ -57,7 +57,7 @@ We begin our analysis of the stochastic reaction process by simulating the syste
 From an applied perspective, this **noise-induced (attractor) switching** introduces a new possibility when studying systems with alternative stable states. Even if the parameters of the system do not change, the system may spontaneously shift from one stable state to another due to stochastic fluctuations! The **mean switching time** is the average time the system spends in one stable state or the other. In general, it can depend on which state the system starts in as it may be easier to switch in one direction compared to the reverse transition. The mean switching time can give us a measure of how stable the system is to random perturbations and is often used as a measure of a system's stability or "resilience". The mean switching time can be estimated from simulations of a model and there are also analytic approaches for its computation that we will study later in the course.
 
 ::: {.doit #eggen1 style="font-size:1.0em; font-family:mainfont;"}
-Open the course [Github page](https://github.com/patterd2/MATH4411_Adv_Math_Bio) and try playing with the MATLAB script
+Open the course [GitHub page](https://github.com/patterd2/MATH4411_Adv_Math_Bio) and try playing with the MATLAB script
 ```
 CH2_bistable_process.m
 ```

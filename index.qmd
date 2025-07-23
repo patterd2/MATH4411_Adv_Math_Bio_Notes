@@ -6,7 +6,7 @@ A key focus will be on designing and understanding stochastic simulation algorit
 
 ::: {.content-visible when-format="html"}
 
-![Animation of a disctete, stochastic, spatial model of fire spread over grassland (time in years). Orange area is currently burning, grey areas are recently burned and yet to regrow, and green areas represent grass cover.](images/FGBA.gif){width=50% fig-align="center"}
+![Animation of a discrete, stochastic, spatial model of fire spread over grassland (time in years). Orange area is currently burning, grey areas are recently burned and yet to regrow, and green areas represent grass cover.](images/FGBA.gif){width=50% fig-align="center"}
 
 :::
 
@@ -32,7 +32,7 @@ The content of Term 1 is divided into 4 Chapters, some of which will be longer t
     - Mean switching times and bistability
 
 - **Chapter 4: Stochastic Reaction-diffusion Models**
-    - Modeling diffusion with SDEs
+    - Modelling diffusion with SDEs
     - Discrete approach to diffusion
     - Spatially discrete approach to reaction-diffusion
     - SDE approach to reaction-diffusion
@@ -40,7 +40,7 @@ The content of Term 1 is divided into 4 Chapters, some of which will be longer t
 
 ## Lectures, Problem Classes & Homeworks
 
-Lectures will primarily be used to present new material, but will also feature computer demonstrations of the algorithms and models presented. As such, students are encouraged to bring along their own laptops to both lectures and problem classes so that they can also run the examples themselves. The MATLAB code for all of the examples will be available on the course Github page:
+Lectures will primarily be used to present new material, but will also feature computer demonstrations of the algorithms and models presented. As such, students are encouraged to bring along their own laptops to both lectures and problem classes so that they can also run the examples themselves. The MATLAB code for all of the examples will be available on the course GitHub page:
 <center>
 [https://github.com/patterd2/MATH4411_Adv_Math_Bio](https://github.com/patterd2/MATH4411_Adv_Math_Bio)
 </center>

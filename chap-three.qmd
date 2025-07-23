@@ -122,7 +122,7 @@ where $D > 0$ is a parameter and $W_x$, $W_y$ and $W_z$ are three independent so
 ![Left: Sample paths of the SDE @eq-SDE_eg1. Right: Sample paths of the process @eq-SDE_eg2 projected onto the $X$-$Y$ plane. Parameters: $D = 0.0001$.](images/SDE1.png){#fig-SDE1 width=100% fig-align="center"}
 
 ::: {.doit #eggen1 style="font-size:1.0em; font-family:mainfont;"}
-Open the course [Github page](https://github.com/patterd2/MATH4411_Adv_Math_Bio) and try playing with the MATLAB scripts
+Open the course [GitHub page](https://github.com/patterd2/MATH4411_Adv_Math_Bio) and try playing with the MATLAB scripts
 ```
 CH3_example_1.m
 CH3_example_2.m
@@ -174,7 +174,7 @@ In @fig-SDE2 we show simulations of the process @eq-SDE_eg4 with $k_5 = 200$ and
 ![Left: Sample paths of the SDE @eq-SDE_eg3. Right: Sample path of the process @eq-SDE_eg4 and solutions to the corresponding ODE with zero noise.](images/SDE2.png){#fig-SDE2 width=100% fig-align="center"}
 
 ::: {.doit #eggen1 style="font-size:1.0em; font-family:mainfont;"}
-Open the course [Github page](https://github.com/patterd2/MATH4411_Adv_Math_Bio) and use the MATLAB script
+Open the course [GitHub page](https://github.com/patterd2/MATH4411_Adv_Math_Bio) and use the MATLAB script
 ```
 CH3_example_4.m
 ```
