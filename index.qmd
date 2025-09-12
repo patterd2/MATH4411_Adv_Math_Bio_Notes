@@ -41,6 +41,7 @@ The content of Term 1 is divided into 4 Chapters, some of which will be longer t
 ## Lectures, Problem Classes & Homeworks
 
 Lectures will primarily be used to present new material, but will also feature computer demonstrations of the algorithms and models presented. As such, students are encouraged to bring along their own laptops to both lectures and problem classes so that they can also run the examples themselves. The MATLAB code for all of the examples will be available on the course GitHub page:
+
 <center>
 [https://github.com/patterd2/MATH4411_Adv_Math_Bio](https://github.com/patterd2/MATH4411_Adv_Math_Bio)
 </center>
@@ -53,14 +54,14 @@ Problem classes will not contain any new material, but will focus on the present
 |---------|----------------------------------------------|--------------|
 | Week 1  | Introductory lecture, 1 lecture              | Chapter 1    |
 | Week 2  | 2 lectures, 1 problem class                  | Chapter 1    |
-| Week 3  | 2 lectures, HW1 due                          | Chapter 1    |
-| Week 4  | 2 lectures, 1 problem class                  | Chapter 2    |
-| Week 5  | 2 lectures, HW2 due                          | Chapter 2    |
-| Week 6  | 2 lectures, 1 problem class                  | Chapter 3    |
-| Week 7  | 2 lectures, HW3 due                          | Chapter 3    |
-| Week 8  | 2 lectures, 1 problem class                  | Ch. 3/Ch. 4  |
-| Week 9  | 2 lectures, HW4 due                          | Chapter 4    |
-| Week 10 | 1 lecture, 1 rev. class + extra prob. sheet  | Chapter 4    |
+| Week 3  | 2 lectures                                   | Chapter 1    |
+| Week 4  | 2 lectures, **HW1 due**, 1 problem class     | Chapter 2    |
+| Week 5  | 2 lectures                                   | Chapter 2    |
+| Week 6  | 2 lectures, **HW2 due**, 1 problem class     | Chapter 3    |
+| Week 7  | 2 lectures                                   | Chapter 3    |
+| Week 8  | 2 lectures, **HW3 due**, 1 problem class     | Ch. 3/Ch. 4  |
+| Week 9  | 2 lectures                                   | Chapter 4    |
+| Week 10 | 1 lecture, 1 revision class, **HW4 due**     | Chapter 4    |
 
 ## Additional Reading
 

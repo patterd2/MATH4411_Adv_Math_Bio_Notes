@@ -801,7 +801,7 @@ $$
 - Use the computational definition of an SDE to compute moments and other related quantities.
 - State and derive the Fokker-Planck equation for a given SDE, including applying the appropriate boundary conditions.
 - Calculate stationary distributions of SDEs using the steady-state Fokker-Planck equation.
-- Compute hitting times for SDEs.
+- Derive hitting time formulae and use them to compute hitting times for SDEs.
 - Explain the impact of boundary conditions on stationary distributions and hitting times.
 - Explain how SSAs for SDEs can be modified to account for a range of boundary conditions that occur in biological applications (e.g., reflecting boundaries).
 - Write chemical Fokker-Planck approximation for a given chemical reaction process.
