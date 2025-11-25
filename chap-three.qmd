@@ -787,6 +787,49 @@ $$
 \end{aligned}
 $$
 
+:::{.eg}
+
+Consider the following stochastic reaction process involving dimerisation and production:
+
+$$
+A + A \xrightarrow{k_1} \emptyset, \quad A + B \xrightarrow{k_2} \emptyset, \quad \emptyset \xrightarrow{k_3} A, \quad \emptyset \xrightarrow{k_4} B.
+$$
+
+Let $P(x,y,t)$ be the probability density function of the process, where $A$ is labelled as species 1 (taking on the values corresponding to $x\in\mathbb{R}_+$) and $B$ as species 2 (taking on the values corresponding to $y\in\mathbb{R}_+$). The propensity functions for the reaction process are:
+
+$$
+\begin{aligned}
+\alpha_1(t) &= \frac{k_1}{\nu} x (x-1), \qquad
+\alpha_2(t) = \frac{k_2}{\nu} x\,y, \\
+\alpha_3(t) &= k_3\nu, \qquad\qquad\qquad\qquad
+\alpha_4(t) = k_4 \nu.
+\end{aligned}
+$$
+
+The corresponding molecules number adjustments in the chemical Fokker-Planck notation are thus given by:
+
+$$
+\begin{aligned}
+&v_{1,1} = -2,\, v_{1,2} = 0, \quad v_{2,1} = -1, \, v_{2,2} = -1, \\
+&v_{3,1} = +1, \, v_{3,2} = 0, \quad v_{4,1} = 0, \, v_{4,2} = +1.
+\end{aligned}
+$$
+
+Hence the chemical Fokker-Planck equations for the process are given by:
+
+$$
+\begin{aligned}
+\frac{\partial}{\partial t}P(x,y,t) &= 
+-\frac{\partial}{\partial x}\left[\left( \frac{-2k_1 x(x-1)}{\nu} - \frac{k_2xy}{\nu} + \nu k_3 \right)P(x,y,t)\right] \\
+&-\frac{\partial}{\partial y}\left[\left( - \frac{k_2xy}{\nu} + \nu k_4 \right)P(x,y,t)\right] \\
+&+\frac{1}{2}\frac{\partial^2}{\partial x^2} \left[ \left( \frac{4k_1 x(x-1)}{\nu} + \frac{k_2 x y}{\nu} + \nu k_3 \right)P(x,y,t) \right] \\
+&+\frac{\partial^2}{\partial x \partial y} \left[ \left( \frac{k_2 x y}{\nu} \right)P(x,y,t) \right]\\
+&+\frac{1}{2}\frac{\partial^2}{\partial y^2} \left[ \left( \frac{k_2 x y}{\nu} + \nu k_4 \right)P(x,y,t) \right].
+\end{aligned}
+$$
+
+:::
+
 ## Knowledge checklist {.unnumbered}
 
 **Key topics:**
